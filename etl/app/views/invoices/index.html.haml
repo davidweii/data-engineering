@@ -1,0 +1,29 @@
+%h1 Listing invoices
+
+%table{border: 1}
+  %tr
+    %th= 'purchaser_name'
+    %th= 'item_description'
+    %th= 'item_price'
+    %th= 'purchase_count'
+    %th= 'merchant_address'
+    %th= 'merchant_name'
+    %th= 'Action1'
+    %th= 'Action2'
+
+  - @invoices.each do |v|
+    %tr
+      %td= v.purchaser_name
+      %td= v.item_description
+      %td= v.item_price
+      %td= v.purchase_count
+      %td= v.merchant_address
+      %td= v.merchant_name
+      %td= link_to 'Edit', edit_invoice_path(v)
+      %td= link_to 'Destroy', v, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= form_tag({action: :upload}, multipart: true) do
+  = file_field_tag :csv, accept: 'text/csv'
+  = submit_tag :upload
